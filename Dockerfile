@@ -10,8 +10,10 @@ MAINTAINER danxiaonuo
 ARG TZ=Asia/Shanghai
 ENV TZ=$TZ
 # 语言设置
-ARG LANG=C.UTF-8
+ARG LANG=zh_CN.UTF-8
 ENV LANG=$LANG
+ARG LC_ALL=zh_CN.UTF-8
+ENV LC_ALL=$LC_ALL
 
 # 镜像变量
 ARG DOCKER_IMAGE=danxiaonuo/mysql
@@ -44,6 +46,8 @@ ENV DOWNLOAD_SRC=$DOWNLOAD_SRC
 
 # 安装依赖包
 ARG PKG_DEPS="\
+    locales \
+    language-pack-zh-hans \
     zsh \
     bash \
     bash-completion \
@@ -91,6 +95,7 @@ RUN set -eux && \
    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || true && \
    sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd && \
    sed -i -e 's/mouse=/mouse-=/g' /usr/share/vim/vim*/defaults.vim && \
+   locale-gen && update-locale LANG=zh_CN.UTF-8 && localedef -c -f UTF-8 -i zh_CN zh_CN.utf8 && locale-gen && \
    /bin/zsh
     
 # ***** 拷贝文件 *****
