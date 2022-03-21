@@ -24,10 +24,10 @@ ARG DOCKER_IMAGE_TAG=20.04
 ENV DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG
 
 # mysql版本号
-ARG MYSQL_SHELL_MAJOR=8.0
-ENV MYSQL_SHELL_MAJOR=$MYSQL_SHELL_MAJOR
-ARG MYSQL_SHELL_VERSION=${MYSQL_SHELL_MAJOR}.28
-ENV MYSQL_SHELL_VERSION=$MYSQL_SHELL_VERSION
+ARG MYSQL_MAJOR=8.0
+ENV MYSQL_MAJOR=$MYSQL_MAJOR
+ARG MYSQL_VERSION=${MYSQL_MAJOR}.28
+ENV MYSQL_VERSION=$MYSQL_VERSION
 
 # 工作目录
 ARG MYSQL_DIR=/var/lib/mysql
@@ -103,9 +103,17 @@ COPY ["run.sh", "/run.sh"]
 
 # ***** 下载 *****
 RUN set -eux && \
-    # 下载mysql-shell
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-Shell/mysql-shell_${MYSQL_SHELL_VERSION}-1ubuntu20.04_amd64.deb \
-    -O ${DOWNLOAD_SRC}/mysql-shell_${MYSQL_SHELL_VERSION}-1ubuntu20.04_amd64.deb && \
+    # 下载mysql
+    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/libmysqlclient21_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    -O ${DOWNLOAD_SRC}/libmysqlclient21_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
+    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/libmysqlclient-dev_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    -O ${DOWNLOAD_SRC}/libmysqlclient-dev_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
+    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    -O ${DOWNLOAD_SRC}/mysql-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
+    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-community-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    -O ${DOWNLOAD_SRC}/mysql-community-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
+    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-Shell/mysql-shell_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    -O ${DOWNLOAD_SRC}/mysql-shell_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
     # 安装mysql-shell
     dpkg -i ${DOWNLOAD_SRC}/*.deb && chmod 775 /run.sh && \
     # 删除临时文件
