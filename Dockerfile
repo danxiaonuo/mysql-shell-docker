@@ -26,7 +26,7 @@ ENV DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG
 # mysql版本号
 ARG MYSQL_MAJOR=8.0
 ENV MYSQL_MAJOR=$MYSQL_MAJOR
-ARG MYSQL_VERSION=${MYSQL_MAJOR}.29
+ARG MYSQL_VERSION=${MYSQL_MAJOR}.30
 ENV MYSQL_VERSION=$MYSQL_VERSION
 
 # 工作目录
@@ -104,21 +104,21 @@ COPY ["run.sh", "/run.sh"]
 # ***** 下载 *****
 RUN set -eux && \
     # 下载mysql
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/libmysqlclient21_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    wget --no-check-certificate https://cdn.mysql.com/archives/mysql-8.0/libmysqlclient21_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
     -O ${DOWNLOAD_SRC}/libmysqlclient21_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/libmysqlclient-dev_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    wget --no-check-certificate https://cdn.mysql.com/archives/mysql-8.0/libmysqlclient-dev_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
     -O ${DOWNLOAD_SRC}/libmysqlclient-dev_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    wget --no-check-certificate https://cdn.mysql.com/archives/mysql-8.0/mysql-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
     -O ${DOWNLOAD_SRC}/mysql-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-community-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    wget --no-check-certificate https://cdn.mysql.com/archives/mysql-8.0/mysql-community-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
     -O ${DOWNLOAD_SRC}/mysql-community-client_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-community-client-core_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    wget --no-check-certificate https://cdn.mysql.com/archives/mysql-8.0/mysql-community-client-core_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
     -O ${DOWNLOAD_SRC}/mysql-community-client-core_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-community-client-plugins_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    wget --no-check-certificate https://cdn.mysql.com/archives/mysql-8.0/mysql-community-client-plugins_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
     -O ${DOWNLOAD_SRC}/mmysql-community-client-plugins_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb  && \   
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-common_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    wget --no-check-certificate https://cdn.mysql.com/archives/mysql-8.0/mysql-common_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
     -O ${DOWNLOAD_SRC}/mysql-common_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
-    wget --no-check-certificate https://cdn.mysql.com/Downloads/MySQL-Shell/mysql-shell_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
+    wget --no-check-certificate https://cdn.mysql.com/archives/mysql-shell/mysql-shell_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb \
     -O ${DOWNLOAD_SRC}/mysql-shell_${MYSQL_VERSION}-1ubuntu20.04_amd64.deb && \
     # 安装mysql-shell
     dpkg -i ${DOWNLOAD_SRC}/*.deb && chmod 775 /run.sh && \
